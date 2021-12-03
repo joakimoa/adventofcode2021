@@ -18,4 +18,4 @@ defmodule Adventofcode2021 do
   end
 end
 # Day1.run()
-Day2.run()
+Day3.run()
