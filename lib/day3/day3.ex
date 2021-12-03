@@ -1,33 +1,30 @@
 defmodule Day3 do
   def load_input(path) do
     {:ok, text} = File.read(path)
-    list = String.split(text, ["\n", "\r", "\r\n"])
-    list |> Enum.map(&String.split(&1))
+    String.split(text, ["\n", "\r", "\r\n"])
   end
 
   def run() do
-    input = [
-      "00100",
-      "11110",
-      "10110",
-      "10111",
-      "10101",
-      "01111",
-      "00111",
-      "11100",
-      "10000",
-      "11001",
-      "00010",
-      "01010",]
+    # input = [
+    #   "00100",
+    #   "11110",
+    #   "10110",
+    #   "10111",
+    #   "10101",
+    #   "01111",
+    #   "00111",
+    #   "11100",
+    #   "10000",
+    #   "11001",
+    #   "00010",
+    #   "01010",]
+    input = load_input("./lib/day3/input.txt")
 
     data = input |> Enum.map(& String.graphemes(&1))
     IO.inspect data
 
-    # zeroes = List.foldr(data, 0, fn x, acc -> case hd(x) do "0" -> acc + 1; "1" -> acc end end)
-    # IO.inspect zeroes
-
     int_list = Enum.map(data, fn x -> Enum.map(x, fn y -> String.to_integer(y) end) end)
-    sum_ones = List.foldr(int_list, {0,0,0,0,0}, fn [aa,bb,cc,dd,ee], {a,b,c,d,e} -> {a+aa, b+bb, c+cc, d+dd, e+ee} end)
+    sum_ones = List.foldr(int_list, {0,0,0,0,0,0,0,0,0,0,0,0}, fn [aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll], {a,b,c,d,e,f,g,h,i,j,k,l} -> {a+aa, b+bb, c+cc, d+dd, e+ee, f+ff, g+gg, h+hh, i+ii, j+jj, k+kk, l+ll} end)
     IO.inspect sum_ones
     gamma = Enum.map(Tuple.to_list(sum_ones), fn x -> cond do (x > length(data)/2) -> 1; (x <= length(data)/2) -> 0 end end)
     IO.inspect gamma
