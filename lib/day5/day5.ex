@@ -12,6 +12,22 @@ defmodule Day5 do
         y1 == y2 ->
             Enum.to_list(x1..x2)
             |> Enum.map(fn x -> {x, y1} end)
+        (x2 > x1) && (y2 > y1) ->
+            Enum.to_list(0..x2-x1)
+            |> Enum.map(fn x -> {x1+x, y1+x} end)
+        (x2 < x1) && (y2 < y1) ->
+            Enum.to_list(0..x1-x2)
+            |> Enum.map(fn x -> {x1-x, y1-x} end)
+        (x2 > x1) && (y2 < y1) ->
+            Enum.to_list(0..x2-x1)
+            |> Enum.map(fn x -> {x1+x, y1-x} end)
+        (x2 < x1) && (y2 > y1) ->
+            Enum.to_list(0..x1-x2)
+            |> Enum.map(fn x -> {x1-x, y1+x} end)
+        true ->
+            IO.inspect "oh no"
+            [{0,0}, {0,0}]
+
       end
     end
 
@@ -25,7 +41,7 @@ defmodule Day5 do
                 "." -> Map.put(sheet, point, "1")
                 "1" -> Map.put(sheet, point, "2")
                 "2" -> Map.put(sheet, point, "2")
-                nil -> Map.put(sheet, point, "?")
+                _ -> Map.put(sheet, point, "?")
             end
         end
 
@@ -43,13 +59,13 @@ defmodule Day5 do
         end
 
         def print(board) do
-            for row <- 0..9 do
-              for col <- 0..9 do
+            for row <- 0..100 do
+              for col <- 0..100 do
                 " " <> board[{col, row}]
               end
-              |> Enum.join(" |")
+              |> Enum.join("")
             end
-            |> Enum.join("\n---+---+---\n")
+            |> Enum.join("\n")
             |> IO.puts()
         end
     end
@@ -86,10 +102,13 @@ defmodule Day5 do
         sheet = Sheet.create_sheet(max_x, max_y)
         # IO.inspect sheet
 
+        IO.inspect "input:"
+        IO.inspect input
         cs = input
-        |> Enum.filter(fn [{x1, y1}, {x2, y2}] -> (x1 == x2) || (y1 == y2) end)
+        # |> Enum.filter(fn [{x1, y1}, {x2, y2}] -> (x1 == x2) || (y1 == y2) end)
         |> Enum.map(&get_points(&1))
         # |> List.foldr(%{} fn [{x1, y1}, {x2, y2}], acc -> end)
+        IO.inspect "CS"
         IO.inspect cs
 
         sheet_filled = List.foldr(cs, sheet, fn x, acc -> Sheet.fill(acc, x) end)
