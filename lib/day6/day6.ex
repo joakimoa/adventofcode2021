@@ -50,8 +50,7 @@ defmodule Day6 do
     end
 
     def breeding_cycle(fish, n) when n > 0 do
-      accumulator = Enum.to_list(0..9)
-      |> List.foldr(%{}, fn x, acc -> Map.put(acc, x, 0) end)
+      accumulator = Map.new(Enum.to_list(0..9), fn x -> {x, 0} end)
       # IO.inspect fish
       Map.to_list(fish)
       |> List.foldr(accumulator, fn x, acc -> move(acc, x) end)
@@ -64,8 +63,7 @@ defmodule Day6 do
   end
 
   def part_two() do
-    fish = Enum.to_list(0..9)
-    |> List.foldr(%{}, fn x, acc -> Map.put(acc, x, 0) end)
+    fish = Map.new(Enum.to_list(0..9), fn x -> {x, 0} end)
     IO.inspect fish
 
     # input = [3,4,3,1,2] # 26
