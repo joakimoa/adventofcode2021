@@ -36,4 +36,49 @@ defmodule Day6 do
     IO.inspect input, charlists: :as_lists
     IO.inspect Enum.count(input)
   end
+
+  defmodule Ponds do
+    def move(fish, {k, v}) do
+      case k do
+        0 ->
+          fish
+          |> Map.put(8, v)
+          |> Map.put(6, Map.get(fish, 6) + v)
+        _ ->
+          Map.put(fish, k-1, v)
+      end
+    end
+
+    def breeding_cycle(fish, n) when n > 0 do
+      accumulator = Enum.to_list(0..9)
+      |> List.foldr(%{}, fn x, acc -> Map.put(acc, x, 0) end)
+      # IO.inspect fish
+      Map.to_list(fish)
+      |> List.foldr(accumulator, fn x, acc -> move(acc, x) end)
+      |> breeding_cycle(n-1)
+    end
+
+    def breeding_cycle(fish, 0) do
+        fish
+    end
+  end
+
+  def part_two() do
+    fish = Enum.to_list(0..9)
+    |> List.foldr(%{}, fn x, acc -> Map.put(acc, x, 0) end)
+    IO.inspect fish
+
+    # input = [3,4,3,1,2] # 26
+    input = load_input("./lib/day6/input.txt")
+
+    fish = input
+    |> List.foldr(fish, fn x, acc -> Map.put(acc, x, Map.get(acc, x)+1) end)
+    IO.inspect fish
+
+    res = Ponds.breeding_cycle(fish, 256)
+    IO.inspect res
+    count = Map.to_list(res)
+    |> List.foldr(0, fn {_, v}, acc -> acc + v end)
+    IO.inspect count
+  end
 end
