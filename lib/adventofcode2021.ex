@@ -21,4 +21,5 @@ end
 # Day3.run()
 # Day5.part_one()
 # Day6.part_two()
-Day7.part_one()
+# Day7.part_one()
+Day8.part_one()
