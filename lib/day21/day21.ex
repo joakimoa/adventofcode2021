@@ -37,6 +37,6 @@ defmodule Day21 do
     # IO.puts start_4.(1)
     # IO.puts start_4.(10)
     # IO.puts start_4.(11)
-    IO.puts run({4, 0}, {8, 0}, 0)
+    IO.puts run({8, 0}, {10, 0}, 0)
   end
 end
