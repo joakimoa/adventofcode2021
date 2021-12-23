@@ -23,4 +23,5 @@ end
 # Day6.part_two()
 # Day7.part_one()
 # Day8.part_one()
-Day21.part_one()
+# Day21.part_one()
+Day22.part_one()
